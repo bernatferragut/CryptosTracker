@@ -1,0 +1,31 @@
+{
+  "name": "cryptostracker",
+  "version": "1.0.0",
+  "description": "Crypto Tracker Web App",
+  "main": "main.js",
+  "scripts": {
+    "dev": "webpack -d --watch",
+    "prod": "webpack -p",
+    "webpack": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bernatferragut/CryptosTracker.git"
+  },
+  "keywords": [
+    "cryptos",
+    "tracker"
+  ],
+  "author": "Bernat Ferragut",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bernatferragut/CryptosTracker/issues"
+  },
+  "homepage": "https://github.com/bernatferragut/CryptosTracker#readme",
+  "dependencies": {
+    "webpack": "^4.4.1"
+  },
+  "devDependencies": {
+    "webpack-cli": "^2.0.13"
+  }
+}
