@@ -1,13 +1,25 @@
-// JS HTML Elements Functions
+// JS HTML Element Functions
+class CreateElement {
+    constructor(_elementName, _atributes, _text, _selectedTarget){
+        this.elementName = _elementName||'div' ;
+        this.atributes = _atributes||{'name':'value'};
+        this.text = _text||'';
+        this.selectedTarget = _selectedTarget||'body';
+        this.element;
+        this.textNode;
+        this.target;
 
-function Element1() {
-    console.log('This is the Elmenent 1');
+    }
+    // 1.Element construction
+    elementConstruction() {
+        this.element = document.createElement(this.elementName);
+        this.element.setAttribute(this.atributes.name, this.atributes.value);
+        this.textNode = document.createTextNode(this.text);
+        this.element.appendChild(this.textNode);
+        this.target = document.querySelector(this.selectedTarget);
+        this.target.appendChild(this.element);
+    }
 }
-
-function Element2() {
-    console.log('This is the Element 2');
-}
-
-module.exports = { Element1, Element2 };
+module.exports = { CreateElement };
 
  

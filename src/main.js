@@ -1,7 +1,8 @@
 // JS main file
-import { Element1, Element2 } from './elements';
+import { CreateElement } from './elements';
 
 
 // Test Logs
-console.log(Element1());
-console.log(Element2());
+let newElement = new CreateElement('button',{'id':'firstElement'},'CLICK ME', 'body');
+let result = newElement.elementConstruction();
+console.log('result');
