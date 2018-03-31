@@ -1,13 +1,31 @@
-// // JS main file
-// import { CreateElement } from './elements';
+// JS Functions creation
 
+// 1.Cryptos Storage
+let cryptosList = ['crypto 1', 'crypto 2', 'crypto 3'];
+console.log('start:', cryptosList);   
 
-// // Test creating DOM elements
-// let newElement = new CreateElement('button',{'id':'firstElement'},'CLICK ME', 'body');
-// newElement.elementConstruction();
-// let newElement2 = new CreateElement('h1', {'id':'secondElement'}, 'THIS IS AN H1', 'div');
-// newElement2.elementConstruction();
+// 2.Cryptos Display
+function cryptosDisplay() {
+    console.log(cryptosList);
+}
 
+// 3.Add new cryptos
+function addCryptos(crypto) {
+    cryptosList.push(crypto);
+    cryptosDisplay(); 
+}
+
+// 4.Change cryptos
+function changeCryptos(index, value) {
+    cryptosList[index] = value;
+    cryptosDisplay();
+}
+
+// 5.Delete crypto
+function deleteCrypto(index) {
+    cryptosList.splice(index,1);
+    cryptosDisplay();
+}
 // JS objects creation
 
 let cryptos = {
@@ -36,4 +54,5 @@ let cryptos = {
     }
 
 };
+
 console.log('cryptos object: ', cryptos);
