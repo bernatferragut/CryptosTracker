@@ -22,4 +22,9 @@ class CreateElement {
 }
 module.exports = { CreateElement };
 
- 
+// Test creating DOM elements
+// let newElement = new CreateElement('button',{'id':'firstElement'},'CLICK ME', 'body');
+// newElement.elementConstruction();
+// let newElement2 = new CreateElement('h1', {'id':'secondElement'}, 'THIS IS AN H1', 'div');
+// newElement2.elementConstruction();
+// import { CreateElement } from './elements';
