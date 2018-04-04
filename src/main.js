@@ -10,13 +10,13 @@ let cryptos = {
             console.log('cryptos display: ');
             for(let i=0; i<this.listCrypto.length; i++) {
                 if (this.listCrypto[i].completed === true) {
+                    console.log('(x)', this.listCrypto[i].nameCrypto);
+                    console.log('(x)', this.listCrypto[i].symbolCrypto);
                     console.log('(x)', this.listCrypto[i].completed);
-                    console.log(this.listCrypto[i].nameCrypto);
-                    console.log(this.listCrypto[i].symbolCrypto);
                 } else {
-                    console.log('()', this.listCrypto[i].completed);
-                    console.log(this.listCrypto[i].nameCrypto);
-                    console.log(this.listCrypto[i].symbolCrypto);
+                    console.log('()', this.listCrypto[i].nameCrypto);
+                    console.log('()', this.listCrypto[i].symbolCrypto);
+                    console.log('()', this.listCrypto[i].completed);                    
                 }
             }
         }
@@ -32,26 +32,26 @@ let cryptos = {
             usdNetoCrypto: crypto.usdNeto,
             completed: false
         });
-        this.displayCryptos();
+        // this.displayCryptos();
     },
 
     // 4. Change
     changeCryptos: function(index, cryptoName) {
         this.listCrypto[index].nameCrypto = cryptoName;
-        this.displayCryptos();                      
+        // this.displayCryptos();                      
     },
 
     // 5. Delete
     deleteCrypto: function(index) {
         this.listCrypto.splice(index,1);
-        this.displayCryptos();
+        // this.displayCryptos();
     },
 
     // 6. Crypto Completed
     completedCrypto: function(position) {
         let cryptoSelected = this.listCrypto[position];
         cryptoSelected.completed = !cryptoSelected.completed;
-        this.displayCryptos();
+        // this.displayCryptos();
     },
  
     // 7. Toggle All
@@ -60,8 +60,8 @@ let cryptos = {
         let completedCryptos = 0;
         // get number of completed Cryptos
         for (let i=0; i< allCryptos; i++) {
-            if(this.listCrypto[i]).completed === true) {
-                completedCrypto ++;
+            if(this.listCrypto[i].completed === true) {
+                completedCryptos ++;
             }
         }
         // Case1: if everything is true make everything false
@@ -79,12 +79,20 @@ let cryptos = {
     }
 }
 
-// Tests
+// Adding Cryptos Tests
 cryptos.addCryptos({name:'bitcoin', symbol: 'BTC', hodl: 2000, market: 40000});
-cryptos.addCryptos({name:'eos', symbol: 'EOS', hodl: 6000, market: 10000});
-console.log('cryptos object: ', cryptos);
-// cryptos.displayCryptos();
-cryptos.completedCrypto(0);
-cryptos.completedCrypto(1);
-// cryptos.displayCryptos();
+cryptos.addCryptos({name:'eOperationSystem', symbol: 'EOS', hodl: 6000, market: 10000});
+
+// SELECTIONS
+let buttonDisplay = document.getElementById('display-button');
+let buttonToggle = document.getElementById('toggle-button');
+
+// BUTTON ACTIONS
+buttonDisplay.addEventListener('click', function() {
+    cryptos.displayCryptos();
+});
+
+buttonToggle.addEventListener('click', function(){
+    cryptos.toggleAll();
+});
 

@@ -20,7 +20,7 @@ class CreateElement {
         this.target.appendChild(this.element);
     }
 }
-module.exports = { CreateElement };
+// module.exports = { CreateElement };
 
 // Test creating DOM elements
 // let newElement = new CreateElement('button',{'id':'firstElement'},'CLICK ME', 'body');

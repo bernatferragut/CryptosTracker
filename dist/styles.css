@@ -1,0 +1,115 @@
+/* CSS */
+body {
+    color: greenyellow;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    background-color:black;
+    margin: 0;
+}
+
+pre {
+    color: greenyellow;
+}
+/* LAYOUT */
+.wrapper {
+    display: grid;
+    margin-top: 5%;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    flex-direction: column;
+    max-height: auto;
+}
+
+.flex-container2 {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    flex-direction: row;
+    max-height: auto;
+}
+
+#flex-item{
+    margin: auto;
+}
+
+/* BUTTONS */
+.btn {
+    background-color:#101010;
+    border-radius: 4px;
+    border-width: 1px solid;
+    border-color: greenyellow;
+    padding: 15px 15px;
+    font-size: 10px;
+    margin: 15px;
+    color: greenyellow;
+
+  }
+
+  /* BLOCKS DESIGN */
+  #blocks-design {
+    font-size: 8px;
+    background-color: yellowgreen;
+    color: #101010;
+    height: 50px;
+    width:  50px;
+    border-radius: 4px;
+    border-width: 1px solid;
+    border-color: greenyellow;
+  }
+
+  #dot-design {
+    background-color: orangered;
+    height: 10px;
+    width:  1px;
+    border-width: 1px solid;
+    border-color: greenyellow;
+  }
+
+  #time-design {
+      font-size: 8px;
+      color: yellowgreen;
+  }
+
+
+  /* FADE IN  DESIGN */
+  @-webkit-keyframes fadeIn {
+    0% {opacity: 0;} to {opacity: 1;}
+ }
+ @keyframes fadeIn {
+    0% {opacity: 0;} to {opacity: 1;}
+ }
+ 
+ .fadeIn {
+    opacity:0;
+
+    animation: fadeIn ease-in 1;
+    -webkit-animation: fadeIn ease-in 1;
+
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+
+    animation-duration: 0.7s;
+    -webkit-animation-duration: 0.7s;
+ }
+
+ .fadeIn2 {
+    opacity:0;
+
+    animation: fadeIn ease-in 1;
+    -webkit-animation: fadeIn ease-in 1;
+
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+
+    animation-duration: 1.2s;
+    -webkit-animation-duration: 1.2s;
+ }
+
+ 
+
+
+  
