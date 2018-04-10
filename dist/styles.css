@@ -1,9 +1,15 @@
+/* VARIABLES */
+:root {
+    --main-bg-color: #101010;
+    --main-text-color: greenyellow;
+  }
+
 /* CSS */
 body {
-    color: greenyellow;
+    color: var(--main-text-color);
     font-family: 'IBM Plex Mono', monospace;
     font-size: 10px;
-    background-color:black;
+    background-color: var(--main-bg-color);
     margin: 0;
 }
 
@@ -38,42 +44,30 @@ pre {
 
 /* BUTTONS */
 .btn {
-    background-color:#101010;
+    background-color:var(--main-bg-color);
     border-radius: 4px;
     border-width: 1px solid;
-    border-color: greenyellow;
-    padding: 15px 15px;
+    border-color: var(--main-text-color);
+    padding: 8px 15px;
     font-size: 10px;
     margin: 15px;
-    color: greenyellow;
-
+    color: var(--main-text-color);
   }
 
-  /* BLOCKS DESIGN */
-  #blocks-design {
-    font-size: 8px;
-    background-color: yellowgreen;
-    color: #101010;
-    height: 50px;
-    width:  50px;
+  /* INPUT */
+  #inputCrypto {
+    background-color:var(--main-bg-color);
     border-radius: 4px;
     border-width: 1px solid;
-    border-color: greenyellow;
+    border-color: var(--main-text-color);
+    padding: 8px 15px;
+    font-size: 10px;
+    margin: 15px;
+    color: yellow;
+    text-transform: uppercase;
   }
 
-  #dot-design {
-    background-color: orangered;
-    height: 10px;
-    width:  1px;
-    border-width: 1px solid;
-    border-color: greenyellow;
-  }
-
-  #time-design {
-      font-size: 8px;
-      color: yellowgreen;
-  }
-
+  /* BLINK INPUT */
 
   /* FADE IN  DESIGN */
   @-webkit-keyframes fadeIn {
