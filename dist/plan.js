@@ -12,6 +12,7 @@ let inputSymbol ="";
 let inputHodl = "";
 let cryptoAdded = {};
 let cryptosList = [];
+let clicks = 0;
 
 function addCrypto() {
     // input data taken ( a string and a number )
@@ -21,25 +22,20 @@ function addCrypto() {
     cryptoAdded = new Crypto(inputSymbol, inputHodl);
     // Added to the cryptolist
     cryptosList.push(cryptoAdded);
-    // consoles
-    console.log(`Crypto added: ${cryptoAdded.symbol}`);
-    console.log(`Amount added: ${cryptoAdded.hodl}`);
-    console.log(cryptoAdded);
-    console.log(cryptosList);
-    console.log(cryptosList[0]);
-    console.log('=========================');
-    // clean inputs
-    inputSymbol.value = '';
-    inputHodl.value = '';
     // get cryptos
     getCryptos(cryptoAdded);
+    // add clicks
+    clicks++;
+    console.log('CLICKS: ' + clicks);
+    // clean inputs
+    inputSymbol.value = "";
+    inputHodl.value = "";
 }
 
 // GET API DATA
-
 function getCryptos(cryptoAdded) {
+    // vars
     let newCrypto = cryptoAdded.symbol;
-    console.log('MY NEW CRYPTO: ' + newCrypto);
     let theResponse;
     // by default we get the BTC value always + any other crypto
     let cryptosUrl = `https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,${cryptoAdded.symbol}&tsyms=USD`;
@@ -47,48 +43,69 @@ function getCryptos(cryptoAdded) {
         .then(blob => blob.json()) 
         .then((res) => {
             let theResponse = res;
-            console.log(theResponse);
-            // ONCE WE HAVE THE RESPONSE
-            console.log('THE RESPONSE BTC: ' + theResponse.BTC.USD);
-            console.log('THE RESPONSE NEWCRYPTO: ' + theResponse[newCrypto].USD);
             // Create DIV
             createDivCrypto(cryptoAdded, theResponse);
             // Visualize Data
-            let blobData = JSON.stringify(theResponse, null, 2);
-            data.innerHTML = blobData;
-        }) // Second Promise as real response
+            // let blobData = JSON.stringify(theResponse, null, 2);
+            // data.innerHTML = blobData;
+        }) 
         .catch(err => console.log('There was an error', err)); // In case of Error
 }
 
 // Create DIV function
-function createDivCrypto(cryptoAdded, theResponse) {
+function createDivCrypto(cryptoAdded, theResponse, clicks) {
     
     // DIV Selection
     let myContainer = document.getElementById('cryptos');
 
     // Variables
-    console.log('---------------------')
-    let cryptoSymbol = cryptoAdded.symbol; // OK
-    console.log('SYMBOL: ' + cryptoSymbol); 
-    let cryptoHodl = cryptoAdded.hodl; // OK
-    console.log('HODL: ' + cryptoHodl);
-    let cryptoHodlValue = theResponse[cryptoSymbol].USD; // OK 
-    console.log('HODL VALUE: ' + cryptoHodlValue);
-    let cryptoBTCValue = theResponse.BTC.USD; // OK
-    console.log('BTC VALUE: ' + cryptoBTCValue);
-    let crytpoGainUSD = Math.round(cryptoHodl * cryptoHodlValue); // OK
-    console.log('GAINUSD: ' + crytpoGainUSD);
-    let crytpoGainBTC = Math.round((cryptoHodl * cryptoHodlValue) / cryptoBTCValue); //
-    console.log('GAINBTC: ' + crytpoGainBTC);
-   
+    let cryptoSymbol = cryptoAdded.symbol;
+    let cryptoHodl = cryptoAdded.hodl;
+    let cryptoHodlValue = theResponse[cryptoSymbol].USD;
+    let cryptoBTCValue = theResponse.BTC.USD;
+    let crytpoGainUSD = Math.round(cryptoHodl * cryptoHodlValue);
+    let crytpoGainBTC = Math.round((cryptoHodl * cryptoHodlValue) / cryptoBTCValue);
+
     // BTC
     let htmlString =
-    `<div>${cryptoSymbol}</div> 
-    <div>${cryptoHodl}</div>
-    <div>${cryptoHodlValue}</div>
-    <div>${cryptoBTCValue}</div>
-    <div>${crytpoGainUSD}</div>
-    <div>${crytpoGainBTC}</div>
+    `
+        <div class="box2 fadeIn">${cryptoSymbol}</div> 
+        <div class="box2 fadeIn">${cryptoHodl}</div>
+        <div class="box2 fadeIn">${cryptoHodlValue}</div>
+        <div class="box2 fadeIn">${crytpoGainUSD}</div>
+        <div class="box2 fadeIn">${crytpoGainBTC}</div>
     `
     myContainer.insertAdjacentHTML('beforeend', htmlString);
+    
+    // // Clicks Condition
+    // if(clicks === 0) {
+    //         // BTC
+    //     let htmlString =
+    //     `
+    //     <div class="box1 fadeIn">SYMBOL</div> 
+    //     <div class="box1 fadeIn">HODL</div>
+    //     <div class="box1 fadeIn">HODL VALUE</div>
+    //     <div class="box1 fadeIn">USD GAIN</div>
+    //     <div class="box1 fadeIn">BTC GAIN</div>
+
+    //     <div class="box2 fadeIn">${cryptoSymbol}</div> 
+    //     <div class="box2 fadeIn">${cryptoHodl}</div>
+    //     <div class="box2 fadeIn">${cryptoHodlValue}</div>
+    //     <div class="box2 fadeIn">${crytpoGainUSD}</div>
+    //     <div class="box2 fadeIn">${crytpoGainBTC}</div>
+    //     `
+    //     myContainer.insertAdjacentHTML('beforeend', htmlString);
+
+    // } else if (clicks > 0) {
+    //         // BTC
+    //     let htmlString =
+    //     `
+    //     <div class="box2 fadeIn">${cryptoSymbol}</div> 
+    //     <div class="box2 fadeIn">${cryptoHodl}</div>
+    //     <div class="box2 fadeIn">${cryptoHodlValue}</div>
+    //     <div class="box2 fadeIn">${crytpoGainUSD}</div>
+    //     <div class="box2 fadeIn">${crytpoGainBTC}</div>
+    //     `
+    //     myContainer.insertAdjacentHTML('beforeend', htmlString);
+    // }
 }
