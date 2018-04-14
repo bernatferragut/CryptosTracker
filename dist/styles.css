@@ -38,6 +38,14 @@ pre {
     max-height: auto;
 }
 
+.flex-container3 {
+    display: grid;
+    justify-content: center;
+    align-items: center; 
+    flex-direction: row;
+    max-height: auto;
+}
+
 #flex-item{
     margin: auto;
 }
