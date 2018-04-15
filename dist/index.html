@@ -13,11 +13,11 @@
     <!-- ELEMENTS -->
     <div class="wrapper">
         <div class="flex-container fadeIn">
-            <h1 id="title">CRYPTOTRACKER</h1>
+            <h1 id="title">CRYPT0TRACKER</h1>
         </div>
         <div class="flex-container2 fadeIn2">
-            <input type="text" id="symbolCrypto" placeholder="symbol  here" autofocus value=""/>
-            <input type="number" id="amountCrypto" placeholder="amount here" autofocus value=""/>
+            <input type="text" id="symbolCrypto" placeholder="symbol  here" autofocus value="" onfocus="this.value=''"/>
+            <input type="number" id="hodlCrypto" placeholder="amount here" autofocus value="" onfocus="this.value=''"/>
             <button class="btn" onclick="addCrypto()">ADD CRYPTO</button>
         </div>
         <div class="flex-container">
@@ -29,6 +29,9 @@
             <pre id="data"></pre>
         </div>
     </div>
+
+    <!-- SOUND -->
+    <audio src="audio/sound1.mp3" type="audio/mp3"></audio>
     
     <!-- <script src="test.js"></script> -->
     <!-- <script src="main.bundle.js"></script> -->
