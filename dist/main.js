@@ -118,7 +118,6 @@ function createDivCrypto(cryptoAdded, theResponse, cryptosListUSD, cryptosListBT
 // CREATE TRACKER
 
 function createTracker(cryptosListUSD, cryptosListBTC) {
-
     // vars
     let gainUSD=0;
     let gainBTC=0;
@@ -155,12 +154,12 @@ function createTracker(cryptosListUSD, cryptosListBTC) {
         <div class="box3 fadeIn">-------></div>
         <div class="box3 fadeIn">${gainUSD}</div>
         <div class="box3 fadeIn">${gainBTC}</div>
-
         `
         myContainer.insertAdjacentHTML('beforeend', htmlString);
         // Audio file
         audio.play();
-        // Disappear Inputs with fade
-        document.getElementById('inputs').style.visibility = 'hidden';
+        // Disappear Inputs with fadeOut
+        let out = document.getElementById('inputs');
+        out.setAttribute('class', 'flex-container2 fadeOut1');
 }
 

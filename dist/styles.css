@@ -74,7 +74,7 @@ pre {
     padding: 5px;
     font-size: 10px;
     color: var(--main-bg-color);
-    background-color: var(--main-text-color);;
+    background-color: var(--main-text-color);
 }
 
 .box3 {
@@ -168,19 +168,31 @@ pre {
     -webkit-animation-duration: 1.2s;
  }
 
+ /* FADE OUT  DESIGN */
+ @-webkit-keyframes fadeOut {
+    0% {opacity: 1;}
+    100% {opacity: 0;}
+ }
+ 
+ @keyframes fadeOut {
+    0% {opacity: 1;}
+    100% {opacity: 0;}
+ }
+
  .fadeOut1 {
     opacity:1;
 
-    animation: fadeIn ease-out 0;
-    -webkit-animation: fadeIn ease-out 0;
+    animation: fadeOut ease-out 1;
+    -webkit-animation: fadeOut ease-out 1;
 
-    animation-fill-mode: backwards;
-    -webkit-animation-fill-mode: backwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
 
     animation-duration: 1.2s;
     -webkit-animation-duration: 1.2s;
  }
 
+ 
  
 
 
