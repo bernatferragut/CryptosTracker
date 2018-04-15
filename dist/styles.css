@@ -65,8 +65,6 @@ pre {
     margin: 5px;
     border-color: var(--main-text-color);
     color: var(--main-text-color);
-
-
 }
 
 .box2 {
@@ -77,6 +75,19 @@ pre {
     font-size: 10px;
     color: var(--main-bg-color);
     background-color: var(--main-text-color);;
+}
+
+.box3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1px;
+    border-width: 1px solid;
+    padding: 8px 15px;
+    font-size: 10px;
+    margin: 5px;
+    border-color: var(--main-text-color);
+    color: yellow;
 }
 
 #flex-item{
@@ -152,6 +163,19 @@ pre {
 
     animation-fill-mode: forwards;
     -webkit-animation-fill-mode: forwards;
+
+    animation-duration: 1.2s;
+    -webkit-animation-duration: 1.2s;
+ }
+
+ .fadeOut1 {
+    opacity:1;
+
+    animation: fadeIn ease-out 0;
+    -webkit-animation: fadeIn ease-out 0;
+
+    animation-fill-mode: backwards;
+    -webkit-animation-fill-mode: backwards;
 
     animation-duration: 1.2s;
     -webkit-animation-duration: 1.2s;

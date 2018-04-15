@@ -12,7 +12,8 @@ class Crypto {
 let inputSymbol ="";
 let inputHodl = "";
 let cryptoAdded = {};
-let cryptosList = [];
+let cryptosListUSD = [];
+let cryptosListBTC = [];
 let clicks = 0;
 let audio;
 
@@ -41,20 +42,14 @@ function getCryptos(cryptoAdded) {
         .then(blob => blob.json()) 
         .then((res) => {
             let theResponse = res;
-            // We insert the response value to the crypto object
-            cryptoAdded.hodlPrice = theResponse[cryptoAdded.symbol].USD;
-            // Added to the cryptolist
-            cryptosList.push(cryptoAdded);
-            // log
-            console.log(cryptosList);
             // Create DIV
-            createDivCrypto(cryptoAdded, theResponse, clicks);
+            createDivCrypto(cryptoAdded, theResponse, cryptosListUSD, cryptosListBTC, clicks);
         }) 
         .catch(err => console.log('There was an error', err)); // In case of Error
 }
 
 // CREATE DIV
-function createDivCrypto(cryptoAdded, theResponse, clicks) {
+function createDivCrypto(cryptoAdded, theResponse, cryptosListUSD, cryptosListBTC, clicks) {
 
     // DIV Selection
     let myContainer = document.getElementById('cryptos');
@@ -64,23 +59,28 @@ function createDivCrypto(cryptoAdded, theResponse, clicks) {
     let cryptoHodl = cryptoAdded.hodl;
     let cryptoHodlValue = theResponse[cryptoSymbol].USD;
     let cryptoBTCValue = theResponse.BTC.USD;
-    let crytpoGainUSD = Math.round(cryptoHodl * cryptoHodlValue);
-    let crytpoGainBTC = Math.round((cryptoHodl * cryptoHodlValue) / cryptoBTCValue);
+    let crytpoGainUSD = (cryptoHodl * cryptoHodlValue).toFixed(1);
+    let crytpoGainBTC = ((cryptoHodl * cryptoHodlValue) / cryptoBTCValue).toFixed(1);
+
+    // We insert gains in our gains Lists
+    cryptosListUSD.push(crytpoGainUSD);
+    cryptosListBTC.push(crytpoGainBTC);
+    console.log('A',cryptosListUSD, cryptosListBTC);
 
     // Handling clicks and adding DIV's
     if(clicks === 1) {
         let htmlString =
         `
-        <div class="box1 fadeIn">CRYPTO</div>
-        <div class="box1 fadeIn">VALUE</div>
-        <div class="box1 fadeIn">HODL</div>
-        <div class="box1 fadeIn">USD.GAIN</div>
-        <div class="box1 fadeIn">BTC.GAIN</div>
-        <div class="box2 fadeIn">${cryptoSymbol}</div>
-        <div class="box2 fadeIn">${cryptoHodlValue}</div>
-        <div class="box2 fadeIn">${cryptoHodl}</div>
-        <div class="box2 fadeIn">${crytpoGainUSD}</div>
-        <div class="box2 fadeIn">${crytpoGainBTC}</div>
+        <div class="box1 fadeIn intro">CRYPTO</div>
+        <div class="box1 fadeIn intro">VALUE</div>
+        <div class="box1 fadeIn intro">HODL</div>
+        <div class="box1 fadeIn intro">USD.GAIN</div>
+        <div class="box1 fadeIn intro">BTC.GAIN</div>
+        <div class="box2 fadeIn intro">${cryptoSymbol}</div>
+        <div class="box2 fadeIn intro">${cryptoHodlValue}</div>
+        <div class="box2 fadeIn intro">${cryptoHodl}</div>
+        <div class="box2 fadeIn intro">${crytpoGainUSD}</div>
+        <div class="box2 fadeIn intro">${crytpoGainBTC}</div>
         `
         myContainer.insertAdjacentHTML('beforeend', htmlString);
         // Audio file
@@ -113,13 +113,54 @@ function createDivCrypto(cryptoAdded, theResponse, clicks) {
         // logs
         console.log('Crypto >> Added');
     }
-}
 
+}
 // CREATE TRACKER
 
-function createTracker() {
+function createTracker(cryptosListUSD, cryptosListBTC) {
+
+    // vars
+    let gainUSD=0;
+    let gainBTC=0;
+    let numbersUSD;
+    let numbersBTC;
+
+    //logs
     console.log('Create Tracker clicked');
+
+    // Casting the lists to Numers
+    numbersUSD = cryptosListUSD.map(Number);
+    numbersBTC = cryptosListBTC.map(Number);
+    console.log('B',numbersUSD, numbersBTC);
+    
+    // DIV Selection
+    let myContainer  = document.getElementById('cryptos');
+
+    // Gains calculations
+    for(let i=0; i< numbersUSD.length; i++) {
+        gainUSD += parseInt(numbersUSD[i],10);
+    }
+    for(let i=0; i< numbersBTC.length; i++) {
+        gainBTC += parseInt(numbersBTC[i],10);
+    }
+
+    // Logs
+    console.log('GAINS: ', gainUSD, gainBTC);
+
+    // Adding HTML Gains
+    let htmlString =
+        `
+        <div class="box3 fadeIn">TOTAL</div>
+        <div class="box3 fadeIn">GAINS</div>
+        <div class="box3 fadeIn">-------></div>
+        <div class="box3 fadeIn">${gainUSD}</div>
+        <div class="box3 fadeIn">${gainBTC}</div>
+
+        `
+        myContainer.insertAdjacentHTML('beforeend', htmlString);
+        // Audio file
+        audio.play();
+        // Disappear Inputs with fade
+        document.getElementById('inputs').style.visibility = 'hidden';
 }
 
-
-// add to the list the theResponse

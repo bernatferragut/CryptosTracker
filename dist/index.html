@@ -15,7 +15,7 @@
         <div class="flex-container fadeIn">
             <h1 id="title">CRYPT0TRACKER</h1>
         </div>
-        <div class="flex-container2 fadeIn2">
+        <div class="flex-container2 fadeIn2" id="inputs">
             <p class="darkP">A</p>
             <input type="text" 
                     id="symbolCrypto" 
@@ -34,11 +34,11 @@
             <p class="darkP">+</p>
             <button class="btn1" onclick="addCrypto()">ADD CRYPTO</button>
             <p class="darkP">=</p>
-            <button class="btn2" onclick="createTracker()">CREATE TRACKER</button>
+            <button class="btn2" onclick="createTracker(cryptosListUSD,cryptosListBTC)">CREATE TRACKER</button>
         </div>
         <div class="flex-container">
             <div id="cryptos" class="grid-container">
-                <!-- HERE WE ADD THE BLOCKS -->  
+                <!-- HERE WE ADD THE TITLE DIVS -->  
             </div>
         </div>
         <div class="flex-container">
