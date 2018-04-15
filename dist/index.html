@@ -16,9 +16,25 @@
             <h1 id="title">CRYPT0TRACKER</h1>
         </div>
         <div class="flex-container2 fadeIn2">
-            <input type="text" id="symbolCrypto" placeholder="symbol  here" autofocus value="" onfocus="this.value=''"/>
-            <input type="number" id="hodlCrypto" placeholder="amount here" autofocus value="" onfocus="this.value=''"/>
-            <button class="btn" onclick="addCrypto()">ADD CRYPTO</button>
+            <p class="darkP">A</p>
+            <input type="text" 
+                    id="symbolCrypto" 
+                    placeholder="symbol  
+                    here" autofocus value="" 
+                    onfocus="this.value=''"
+                    size="10"/>
+            <p class="darkP">B</p>
+            <input type="number" 
+                    id="hodlCrypto" 
+                    placeholder="amount here" 
+                    autofocus 
+                    value="" 
+                    onfocus="this.value=''"
+                    size="10"/>
+            <p class="darkP">+</p>
+            <button class="btn1" onclick="addCrypto()">ADD CRYPTO</button>
+            <p class="darkP">=</p>
+            <button class="btn2" onclick="createTracker()">CREATE TRACKER</button>
         </div>
         <div class="flex-container">
             <div id="cryptos" class="grid-container">

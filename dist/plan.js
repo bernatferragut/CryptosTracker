@@ -1,9 +1,10 @@
 
 // CRYPTO CLASS
 class Crypto {
-    constructor(inputSymbol, inputHodl){
+    constructor(inputSymbol, inputHodl, hodlPrice){
         this.symbol = inputSymbol;
         this.hodl = inputHodl;
+        this.hodlPrice = hodlPrice|0;
     }
 }
 
@@ -23,8 +24,6 @@ function addCrypto() {
     audio = document.getElementsByTagName('audio')[0];
     // crypto object creation
     cryptoAdded = new Crypto(inputSymbol, inputHodl);
-    // Added to the cryptolist
-    cryptosList.push(cryptoAdded);
     // get cryptos
     getCryptos(cryptoAdded);
     // add clicks
@@ -42,6 +41,12 @@ function getCryptos(cryptoAdded) {
         .then(blob => blob.json()) 
         .then((res) => {
             let theResponse = res;
+            // We insert the response value to the crypto object
+            cryptoAdded.hodlPrice = theResponse[cryptoAdded.symbol].USD;
+            // Added to the cryptolist
+            cryptosList.push(cryptoAdded);
+            // log
+            console.log(cryptosList);
             // Create DIV
             createDivCrypto(cryptoAdded, theResponse, clicks);
         }) 
@@ -109,3 +114,12 @@ function createDivCrypto(cryptoAdded, theResponse, clicks) {
         console.log('Crypto >> Added');
     }
 }
+
+// CREATE TRACKER
+
+function createTracker() {
+    console.log('Create Tracker clicked');
+}
+
+
+// add to the list the theResponse
