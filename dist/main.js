@@ -1,10 +1,9 @@
 
 // CRYPTO CLASS
 class Crypto {
-    constructor(inputSymbol, inputHodl, hodlPrice){
+    constructor(inputSymbol, inputHodl){
         this.symbol = inputSymbol;
         this.hodl = inputHodl;
-        this.hodlPrice = hodlPrice|0;
     }
 }
 
@@ -68,7 +67,6 @@ function createDivCrypto(cryptoAdded, theResponse, cryptosListUSD, cryptosListBT
     // We insert gains in our gains Lists
     cryptosListUSD.push(crytpoGainUSD);
     cryptosListBTC.push(crytpoGainBTC);
-    console.log('A',cryptosListUSD, cryptosListBTC);
 
     // Handling clicks and adding DIV's
     if(clicks === 1) {
@@ -141,7 +139,7 @@ function createTracker(cryptosListUSD, cryptosListBTC) {
     for(let i=0; i< numbersUSD.length; i++) {
         gainUSD += parseInt(numbersUSD[i],10);
     }
-    console.log(gainUSD.toString());
+
     for(let i=0; i< numbersBTC.length; i++) {
         gainBTC += parseInt(numbersBTC[i],10);
     }
@@ -156,17 +154,30 @@ function createTracker(cryptosListUSD, cryptosListBTC) {
         <div class="box3 fadeIn">${gainBTC}</div>
         `
         myContainer.insertAdjacentHTML('beforeend', htmlString);
-        // Audio file
-        audio.play();
-        // Disappear Inputs with fadeOut
-        let out = document.getElementById('inputs');
-        out.setAttribute('class', 'flex-container2 fadeOut1');
-        // Show list of  cryptoAdde cryptos
-        console.log('The List we need: ', cryptoAddedList);
-        // Adding total value on the TOP
-        document.getElementById('CR0').innerText = 'GAINS: ' + gainUSD.toString() + ' USD';
+
+    // Audio file
+    audio.play();
+
+    // Disappear Inputs with fadeOut
+    let out = document.getElementById('inputs');
+    out.setAttribute('class', 'flex-container2 fadeOut1');
+
+    // Adding total value on the TOP
+    document.getElementById('CR0').innerText = 'GAINS: ' + gainUSD.toString() + ' USD';
+
+    // Show list of  cryptoAdde cryptos
+    console.log('List to be saved: ', cryptoAddedList);
+
+    // Save Data LocalStorage
+    saveData(cryptoAddedList);
 }
 
-// for the automatic call to the API once we know the coins saved inside a cookie
-// window.onload( load cookie, function(){});...using the generated list to render HTML.
+
+// LOCAL STORAGE - SAFE / RETRIEVE DATA
+
+function saveData(cryptoAddedList) {
+    for(let i=0; i<cryptoAddedList.length; i++) {
+        localStorage.setItem(cryptoAddedList[i].symbol,cryptoAddedList[i].hodl);
+    };
+}
 
