@@ -1,4 +1,15 @@
 
+// ON LOAD
+window.onload = function(){
+    if (localStorage.length === 0) {
+        console.log('This is your first time here: WELCOME!');
+    } else {
+        console.log('You have been here before, Loading Data...from localStorage');
+        loadData(localStorage);
+        getCryptos2(symbolString);
+    }
+};
+
 // CRYPTO CLASS
 class Crypto {
     constructor(inputSymbol, inputHodl){
@@ -10,8 +21,11 @@ class Crypto {
 // VARS
 let inputSymbol ="";
 let inputHodl = "";
+let symbolString="";
 let cryptoAdded = {};
 let cryptoAddedList = [];
+let cryptosListSymbol = [];
+let cryptosListHodl = [];
 let cryptosListUSD = [];
 let cryptosListBTC = [];
 let clicks = 0;
@@ -46,6 +60,29 @@ function getCryptos(cryptoAdded) {
             let theResponse = res;
             // Create DIV
             createDivCrypto(cryptoAdded, theResponse, cryptosListUSD, cryptosListBTC, clicks);
+        }) 
+        .catch(err => console.log('There was an error', err)); // In case of Error
+}
+
+function getCryptos2(symbolString) {
+    // vars 
+    let theResponse;
+    let theResponseList=[];     
+    // by default we get the BTC value always + any other crypto
+    let cryptosUrl = `https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,${symbolString}&tsyms=USD`;
+    fetch(cryptosUrl)
+        .then(blob => blob.json()) 
+        .then((res) => {
+            let theResponse = res;
+            // LOGS
+            console.log('THIS IS THE LOADED RESPONSE!!!', theResponse);
+            // CONVERTING THE RESPONSE IN AN ARRAY OF OBJECTS
+            theResponseList = Object.keys(theResponse).map(i => theResponse[i]);
+            console.log('A LIST OF THE RESPONSE!!!', theResponseList);
+            // Create DIV
+
+            // create a loop for each object and create a DIV foreach of them
+            // createDivCrypto(cryptoAdded, theResponse, cryptosListUSD, cryptosListBTC, clicks);
         }) 
         .catch(err => console.log('There was an error', err)); // In case of Error
 }
@@ -173,11 +210,44 @@ function createTracker(cryptosListUSD, cryptosListBTC) {
 }
 
 
-// LOCAL STORAGE - SAFE / RETRIEVE DATA
-
+// LOCAL STORAGE - SAVE DATA
 function saveData(cryptoAddedList) {
     for(let i=0; i<cryptoAddedList.length; i++) {
         localStorage.setItem(cryptoAddedList[i].symbol,cryptoAddedList[i].hodl);
     };
 }
+
+// LOCAL STORAGE - LOAD DATA
+function loadData(localStorage) {
+    for(let i=0; i<localStorage.length; i++){
+        inputSymbol = localStorage.key(i);
+        inputHodl = localStorage.getItem(localStorage.key(i));
+        // crypto Symbol List
+        cryptosListSymbol.push(inputSymbol);
+        // crypto Hodl List
+        cryptosListHodl.push(inputHodl);
+        // crypto object creation
+        cryptoAdded = new Crypto(inputSymbol, inputHodl);
+        // Add  to the List
+        cryptoAddedList.push(cryptoAdded);
+    }
+    // CLEANING STRING OF SYMBOLS - take out BTC
+    for(let i=0; i<cryptosListSymbol.length; i++){
+        let position = 0;
+        if( cryptosListSymbol[i] === 'BTC'){
+            position++;
+            cryptosListSymbol.splice(position,1);
+        }
+    }
+    symbolString = cryptosListSymbol.toString();
+    // LOGS
+    console.log('Loaded DATA OBJECT: ', cryptoAddedList);
+    console.log('Loaded DATA SYMBOL: ', cryptosListSymbol);
+    console.log('Loaded DATA HODL: ', cryptosListHodl);
+    
+    console.log('SYMBOLS COMA SEPARATED STRING:', symbolString);
+}
+
+
+
 
