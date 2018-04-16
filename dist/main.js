@@ -12,6 +12,7 @@ class Crypto {
 let inputSymbol ="";
 let inputHodl = "";
 let cryptoAdded = {};
+let cryptoAddedList = [];
 let cryptosListUSD = [];
 let cryptosListBTC = [];
 let clicks = 0;
@@ -25,6 +26,8 @@ function addCrypto() {
     audio = document.getElementsByTagName('audio')[0];
     // crypto object creation
     cryptoAdded = new Crypto(inputSymbol, inputHodl);
+    // Add  to the List
+    cryptoAddedList.push(cryptoAdded);
     // get cryptos
     getCryptos(cryptoAdded);
     // add clicks
@@ -97,8 +100,8 @@ function createDivCrypto(cryptoAdded, theResponse, cryptosListUSD, cryptosListBT
         let htmlString =
         `
         <div class="box2 fadeIn">${cryptoSymbol}</div> 
-        <div class="box2 fadeIn">${cryptoHodl}</div>
         <div class="box2 fadeIn">${cryptoHodlValue}</div>
+        <div class="box2 fadeIn">${cryptoHodl}</div>
         <div class="box2 fadeIn">${crytpoGainUSD}</div>
         <div class="box2 fadeIn">${crytpoGainBTC}</div>
         `
@@ -130,7 +133,6 @@ function createTracker(cryptosListUSD, cryptosListBTC) {
     // Casting the lists to Numers
     numbersUSD = cryptosListUSD.map(Number);
     numbersBTC = cryptosListBTC.map(Number);
-    console.log('B',numbersUSD, numbersBTC);
     
     // DIV Selection
     let myContainer  = document.getElementById('cryptos');
@@ -139,12 +141,10 @@ function createTracker(cryptosListUSD, cryptosListBTC) {
     for(let i=0; i< numbersUSD.length; i++) {
         gainUSD += parseInt(numbersUSD[i],10);
     }
+    console.log(gainUSD.toString());
     for(let i=0; i< numbersBTC.length; i++) {
         gainBTC += parseInt(numbersBTC[i],10);
     }
-
-    // Logs
-    console.log('GAINS: ', gainUSD, gainBTC);
 
     // Adding HTML Gains
     let htmlString =
@@ -161,5 +161,12 @@ function createTracker(cryptosListUSD, cryptosListBTC) {
         // Disappear Inputs with fadeOut
         let out = document.getElementById('inputs');
         out.setAttribute('class', 'flex-container2 fadeOut1');
+        // Show list of  cryptoAdde cryptos
+        console.log('The List we need: ', cryptoAddedList);
+        // Adding total value on the TOP
+        document.getElementById('CR0').innerText = 'GAINS: ' + gainUSD.toString() + ' USD';
 }
+
+// for the automatic call to the API once we know the coins saved inside a cookie
+// window.onload( load cookie, function(){});...using the generated list to render HTML.
 
