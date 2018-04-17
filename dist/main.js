@@ -5,7 +5,12 @@ window.onload = function(){
         console.log('This is your first time here: WELCOME!');
     } else {
         console.log('You have been here before, Loading Data...from localStorage');
+        // hiding inputs
+        let out = document.getElementById('inputs');
+        out.setAttribute('class', 'flex-container2 fadeOut1');
+        // loading storage
         loadData(localStorage);
+        // getting cryptos
         getCryptos2(symbolString);
     }
 };
@@ -64,10 +69,11 @@ function getCryptos(cryptoAdded) {
         .catch(err => console.log('There was an error', err)); // In case of Error
 }
 
+let theResponseSymbolList=[];
+let theResponseValueList=[]; 
 function getCryptos2(symbolString) {
     // vars 
-    let theResponse;
-    let theResponseList=[];     
+    let theResponse;     
     // by default we get the BTC value always + any other crypto
     let cryptosUrl = `https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,${symbolString}&tsyms=USD`;
     fetch(cryptosUrl)
@@ -77,12 +83,13 @@ function getCryptos2(symbolString) {
             // LOGS
             console.log('THIS IS THE LOADED RESPONSE!!!', theResponse);
             // CONVERTING THE RESPONSE IN AN ARRAY OF OBJECTS
-            theResponseList = Object.keys(theResponse).map(i => theResponse[i]);
-            console.log('A LIST OF THE RESPONSE!!!', theResponseList);
+            theResponseSymbolList = Object.keys(theResponse);
+            theResponseValueList = Object.keys(theResponse).map(i=>theResponse[i].USD);
+            console.log('A LIST OF RESPONSE: ', theResponse);
+            console.log('A LIST OF SYMBOLS: ', theResponseSymbolList);
+            console.log('A LIST OF VALUE: ', theResponseValueList);
             // Create DIV
-
-            // create a loop for each object and create a DIV foreach of them
-            // createDivCrypto(cryptoAdded, theResponse, cryptosListUSD, cryptosListBTC, clicks);
+            createDivCrypto2(theResponseSymbolList,cryptosListHodl, theResponseValueList, theResponse)  
         }) 
         .catch(err => console.log('There was an error', err)); // In case of Error
 }
@@ -153,9 +160,64 @@ function createDivCrypto(cryptoAdded, theResponse, cryptosListUSD, cryptosListBT
     }
 
 }
-// CREATE TRACKER
 
-function createTracker(cryptosListUSD, cryptosListBTC) {
+function createDivCrypto2(theResponseSymbolList,cryptosListHodl, theResponseValueList, theResponse) {
+    console.log('...COMING SOON...');
+
+    // DIV Selection
+    let myContainer = document.getElementById('cryptos');
+    let audio = document.getElementsByTagName('audio')[0];
+
+    // TITLES RENDER
+    let htmlTitlesString =
+    `
+    <div class="box1 fadeIn intro">CRYPTO</div>
+    <div class="box1 fadeIn intro">VALUE</div>
+    <div class="box1 fadeIn intro">HODL</div>
+    <div class="box1 fadeIn intro">USD.GAIN</div>
+    <div class="box1 fadeIn intro">BTC.GAIN</div>
+    `
+    myContainer.insertAdjacentHTML('beforeend', htmlTitlesString);
+    
+    // create a loop for each object and create a DIV 
+    for (let i=0; i<theResponseValueList.length; i++) {
+        // VARS
+        let cryptoSymbol = theResponseSymbolList[i];
+        let cryptoHodl = cryptosListHodl[i];
+        let cryptoHodlValue = theResponseValueList[i];
+        let cryptoBTCValue = theResponse.BTC.USD;
+        let crytpoGainUSD = (cryptoHodl * cryptoHodlValue).toFixed(1);
+        let crytpoGainBTC = ((cryptoHodl * cryptoHodlValue) / cryptoBTCValue).toFixed(1);
+
+        let htmlString =
+        `
+        <div class="box2 fadeIn">${cryptoSymbol}</div> 
+        <div class="box2 fadeIn">${cryptoHodlValue}</div>
+        <div class="box2 fadeIn">${cryptoHodl}</div>
+        <div class="box2 fadeIn">${crytpoGainUSD}</div>
+        <div class="box2 fadeIn">${crytpoGainBTC}</div>
+        `
+        myContainer.insertAdjacentHTML('beforeend', htmlString);
+        
+        // Audio file
+        audio.play();
+        // logs
+        console.log('All Cryptos >> Added');
+    }
+    // Casting the lists to Numers
+    let gainUSD =0;
+    numbersUSD = theResponseValueList.map(Number);
+
+    // Gains calculations = > WIP
+    
+    for(let i=0; i< theResponseValueList.length; i++) {
+            gainUSD += parseInt(numbersUSD[i],10);
+    }
+    document.getElementById('CR0').innerText = 'GAINS: ' + gainUSD.toString() + ' USD';
+}
+
+// CREATE TRACKER
+function createTracker(cryptosListUSD, cryptosListBTC, theResponseValueList) {
     // vars
     let gainUSD=0;
     let gainBTC=0;
