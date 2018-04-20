@@ -71,6 +71,7 @@ function getCryptos(cryptoAdded) {
 
 let theResponseSymbolList=[];
 let theResponseValueList=[]; 
+
 function getCryptos2(symbolString) {
     // vars 
     let theResponse;     
@@ -83,13 +84,10 @@ function getCryptos2(symbolString) {
             // LOGS
             console.log('THIS IS THE LOADED RESPONSE!!!', theResponse);
             // CONVERTING THE RESPONSE IN AN ARRAY OF OBJECTS
-            theResponseSymbolList = Object.keys(theResponse);
-            theResponseValueList = Object.keys(theResponse).map(i=>theResponse[i].USD);
-            console.log('A LIST OF RESPONSE: ', theResponse);
-            console.log('A LIST OF SYMBOLS: ', theResponseSymbolList);
-            console.log('A LIST OF VALUE: ', theResponseValueList);
+            theResponseSymbolList = Object.keys(theResponse); // create a list from it
+            theResponseValueList = Object.keys(theResponse).map(i=>theResponse[i].USD); // create a list from it
             // Create DIV
-            createDivCrypto2(theResponseSymbolList,cryptosListHodl, theResponseValueList, theResponse)  
+            createDivCrypto2(finalCryptoListSymbol,finalCryptoListHodl, theResponseValueList, theResponse);  
         }) 
         .catch(err => console.log('There was an error', err)); // In case of Error
 }
@@ -161,7 +159,7 @@ function createDivCrypto(cryptoAdded, theResponse, cryptosListUSD, cryptosListBT
 
 }
 
-function createDivCrypto2(theResponseSymbolList,cryptosListHodl, theResponseValueList, theResponse) {
+function createDivCrypto2(finalCryptoListSymbol,finalCryptoListHodl, theResponseValueList, theResponse) {
     console.log('...COMING SOON...');
 
     // DIV Selection
@@ -180,10 +178,10 @@ function createDivCrypto2(theResponseSymbolList,cryptosListHodl, theResponseValu
     myContainer.insertAdjacentHTML('beforeend', htmlTitlesString);
     
     // create a loop for each object and create a DIV 
-    for (let i=0; i<theResponseValueList.length; i++) {
+    for (let i=0; i<theResponseSymbolList.length; i++) {
         // VARS
-        let cryptoSymbol = theResponseSymbolList[i];
-        let cryptoHodl = cryptosListHodl[i];
+        let cryptoSymbol = finalCryptoListSymbol[i];
+        let cryptoHodl = finalCryptoListHodl[i];
         let cryptoHodlValue = theResponseValueList[i];
         let cryptoBTCValue = theResponse.BTC.USD;
         let crytpoGainUSD = (cryptoHodl * cryptoHodlValue).toFixed(1);
@@ -279,6 +277,8 @@ function saveData(cryptoAddedList) {
     };
 }
 
+let finalCryptoListSymbol;
+let finalCryptoListHodl;
 // LOCAL STORAGE - LOAD DATA
 function loadData(localStorage) {
     for(let i=0; i<localStorage.length; i++){
@@ -293,6 +293,12 @@ function loadData(localStorage) {
         // Add  to the List
         cryptoAddedList.push(cryptoAdded);
     }
+        console.log('symbols: ' , cryptosListSymbol);
+        console.log('symbols: ' , cryptosListSymbol);
+
+        // I will have to create a second localStorage in the order I want with key 0 => { symbol : Hodl };
+
+
     // CLEANING STRING OF SYMBOLS - take out BTC
     for(let i=0; i<cryptosListSymbol.length; i++){
         let position = 0;
@@ -302,12 +308,11 @@ function loadData(localStorage) {
         }
     }
     symbolString = cryptosListSymbol.toString();
-    // LOGS
-    console.log('Loaded DATA OBJECT: ', cryptoAddedList);
-    console.log('Loaded DATA SYMBOL: ', cryptosListSymbol);
-    console.log('Loaded DATA HODL: ', cryptosListHodl);
+    // CREATING TWO LISTS: ONE OF SYMOBLS , ANOTHER FROM HODLS
     
-    console.log('SYMBOLS COMA SEPARATED STRING:', symbolString);
+    finalCryptoListSymbol =Object.keys(cryptoAddedList).map(i=>cryptoAddedList[i].symbol);
+    finalCryptoListHodl = Object.keys(cryptoAddedList).map(i=>cryptoAddedList[i].hodl)
+
 }
 
 
