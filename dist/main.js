@@ -88,9 +88,10 @@ function getCryptos2(symbolString) {
             console.log('THIS IS THE LOADED RESPONSE!!!', theResponse);
             // CONVERTING THE RESPONSE IN AN ARRAY OF OBJECTS
             theResponseSymbolList = Object.keys(theResponse); // create a list from it
-            theResponseValueList = Object.keys(theResponse).map(i=>theResponse[i].USD); // create a list from it
+            theResponseValueList = Object.keys(theResponse).map(i=>theResponse[i].USD); 
+            console.log('theResponseValueList: ', theResponseValueList);
             // Create DIV
-            createDivCrypto2(cryptoAddedList, theResponse);  
+            createDivCrypto2(cryptoAddedList, theResponse, theResponseValueList);  
         }) 
         .catch(err => console.log('There was an error', err)); // In case of Error
 }
@@ -162,7 +163,7 @@ function createDivCrypto(cryptoAdded, theResponse, cryptosListUSD, cryptosListBT
 
 }
 
-function createDivCrypto2(cryptoAddedList, theResponse) {
+function createDivCrypto2(cryptoAddedList, theResponse, theResponseValueList) {
     console.log('...COMING SOON...');
 
     // DIV Selection
@@ -190,6 +191,10 @@ function createDivCrypto2(cryptoAddedList, theResponse) {
         let crytpoGainUSD = (cryptoHodl * cryptoHodlValue).toFixed(1);
         let crytpoGainBTC = ((cryptoHodl * cryptoHodlValue) / cryptoBTCValue).toFixed(1);
 
+        // We insert gains in our gains Lists
+        cryptosListUSD.push(crytpoGainUSD);
+        cryptosListBTC.push(crytpoGainBTC);
+
         let htmlString =
         `
         <div class="box2 fadeIn">${cryptoSymbol}</div> 
@@ -207,14 +212,19 @@ function createDivCrypto2(cryptoAddedList, theResponse) {
     }
     // Casting the lists to Numers
     let gainUSD =0;
-    numbersUSD = theResponseValueList.map(Number);
+    numbersUSD = cryptosListUSD.map(Number);
+
+    let gainBTC =0;
+    numbersBTC = cryptosListBTC.map(Number);
 
     // Gains calculations = > WIP
-    
     for(let i=0; i< theResponseValueList.length; i++) {
             gainUSD += parseInt(numbersUSD[i],10);
     }
-    document.getElementById('CR0').innerText = 'GAINS: ' + gainUSD.toString() + ' USD';
+    for(let i=0; i< theResponseValueList.length; i++) {
+        gainBTC += parseInt(numbersBTC[i],10);
+    }
+    document.getElementById('CR0').innerText = 'GAINS: ' + gainUSD.toString() + ' USD' + ' => ' + gainBTC.toString() + ' BTC'
 }
 
 // CREATE TRACKER
@@ -313,39 +323,10 @@ function loadData(localStorage) {
     console.log('JSON BACK TO OBJECT: ', cryptoAddedList);
     console.log('LIST OF SYMBOLS: ', cryptosListSymbol);
 
-    // CLEANING STRING OF SYMBOLS - take out BTC
-    // let position = 0;
-    // for(let i=0; i<cryptosListSymbol.length; i++){
-    //     if( cryptosListSymbol[i] === 'BTC'){
-            
-    //         cryptosListSymbol.splice(position,1);
-    //     } else {
-    //         // code
-    //     }
-    //     position++;
-    // }
-
     symbolString = cryptosListSymbol.toString();
     console.log('SYMBOLSTRING: ' + symbolString);
-    // CREATING TWO LISTS: ONE OF SYMOBLS , ANOTHER FROM HODLS
-    // finalCryptoListSymbol =Object.keys(cryptoAddedList).map(i=>cryptoAddedList[i].symbol);
-    // finalCryptoListHodl = Object.keys(cryptoAddedList).map(i=>cryptoAddedList[i].hodl)
 }
 
-
-
-// HODL\
-let hodl = {
-    BAT : {symbol: "BAT", amount: 6474},
-    BTC : {symbol: "BTC", amount: 4.01},
-    BTG : {symbol: "BTG", amount: 4.01},
-    BTS : {symbol: "BTS", amount: 12500},
-    EOS : {symbol: "EOS", amount: 5860},
-    IOT : {symbol: "IOT", amount: 10200},
-    LTC : {symbol: "LTC", amount: 20.01},
-    TRX : {symbol: "TRX", amount: 6740},
-    XLM : {symbol: "XLM", amount: 1260},
-    XRB : {symbol: "XRB", amount: 100},
-}
+// name :"{"data":[{"symbol":"QkFU","hodl":"NjQ3NA=="},{"symbol":"QlRD","hodl":"NC4wMQ=="},{"symbol":"QlRH","hodl":"NC4wMQ=="},{"symbol":"QlRT","hodl":"MTI1MDA="},{"symbol":"RU9T","hodl":"NTg4Ng=="},{"symbol":"SU9U","hodl":"MTA1MDA="},{"symbol":"TFRD","hodl":"MjAuMDE="},{"symbol":"VFJY","hodl":"Njc0MA=="},{"symbol":"WExN","hodl":"MTI2MA=="},{"symbol":"WFJC","hodl":"OTk="}]}"
 
 
