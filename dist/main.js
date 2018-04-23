@@ -327,6 +327,5 @@ function loadData(localStorage) {
     console.log('SYMBOLSTRING: ' + symbolString);
 }
 
-// name :"{"data":[{"symbol":"QkFU","hodl":"NjQ3NA=="},{"symbol":"QlRD","hodl":"NC4wMQ=="},{"symbol":"QlRH","hodl":"NC4wMQ=="},{"symbol":"QlRT","hodl":"MTI1MDA="},{"symbol":"RU9T","hodl":"NTg4Ng=="},{"symbol":"SU9U","hodl":"MTA1MDA="},{"symbol":"TFRD","hodl":"MjAuMDE="},{"symbol":"VFJY","hodl":"Njc0MA=="},{"symbol":"WExN","hodl":"MTI2MA=="},{"symbol":"WFJC","hodl":"OTk="}]}"
 
 
