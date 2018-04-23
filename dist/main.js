@@ -1,4 +1,3 @@
-
 // ON LOAD
 window.onload = function(){
     if (localStorage.length === 0) {
@@ -27,12 +26,16 @@ class Crypto {
 let inputSymbol ="";
 let inputHodl = "";
 let symbolString="";
+//
 let cryptoAdded = {};
 let cryptoAddedList = [];
+let cryptoAddedListObject = {};
+//
 let cryptosListSymbol = [];
 let cryptosListHodl = [];
 let cryptosListUSD = [];
 let cryptosListBTC = [];
+//
 let clicks = 0;
 let audio;
 
@@ -269,50 +272,64 @@ function createTracker(cryptosListUSD, cryptosListBTC, theResponseValueList) {
     saveData(cryptoAddedList);
 }
 
-
 // LOCAL STORAGE - SAVE DATA
 function saveData(cryptoAddedList) {
+    // cryptosList encrypted content with BASE64
     for(let i=0; i<cryptoAddedList.length; i++) {
-        localStorage.setItem(cryptoAddedList[i].symbol,cryptoAddedList[i].hodl);
-    };
+        cryptoAddedList[i].symbol = btoa(cryptoAddedList[i].symbol);
+        cryptoAddedList[i].hodl = btoa((cryptoAddedList[i].hodl).toString());
+    }
+        console.log('1.ENCRYPTED LIST: ', cryptoAddedList);
+        // OBJECT with a List of Objects
+        cryptoAddedListObject.data = cryptoAddedList;
+        console.log('LIST TO OBJECT: ', cryptoAddedListObject);
+        // Convert to a JSON File
+        cryptoAddedListObject = JSON.stringify(cryptoAddedListObject);
+        console.log('OBJECT TO JSON: ' + cryptoAddedListObject);
+        // saveData(objecList);
+        localStorage.setItem('name',cryptoAddedListObject);
 }
 
 let finalCryptoListSymbol;
 let finalCryptoListHodl;
 // LOCAL STORAGE - LOAD DATA
 function loadData(localStorage) {
-    for(let i=0; i<localStorage.length; i++){
-        inputSymbol = localStorage.key(i);
-        inputHodl = localStorage.getItem(localStorage.key(i));
-        // crypto Symbol List
-        cryptosListSymbol.push(inputSymbol);
-        // crypto Hodl List
-        cryptosListHodl.push(inputHodl);
-        // crypto object creation
-        cryptoAdded = new Crypto(inputSymbol, inputHodl);
-        // Add  to the List
-        cryptoAddedList.push(cryptoAdded);
+    // GETTING DATA from localStorage
+    cryptoAddedListObject = localStorage.getItem('name');
+    // from JSON back to OBJECT
+    cryptoAddedListObject = JSON.parse(cryptoAddedListObject);
+    // Pull the list from the Object
+    cryptoAddedList = cryptoAddedListObject.data;
+    // cryptoList encrypted content with BASE64
+    for(let i=0; i<cryptoAddedList.length; i++) {
+        cryptoAddedList[i].symbol = atob(cryptoAddedList[i].symbol);
+        cryptoAddedList[i].hodl = Number(atob(cryptoAddedList[i].hodl));
     }
-        console.log('symbols: ' , cryptosListSymbol);
-        console.log('symbols: ' , cryptosListSymbol);
-
-        // I will have to create a second localStorage in the order I want with key 0 => { symbol : Hodl };
-
+    // picking the symbols from the cryptoList
+    for(let i=0; i<cryptoAddedList.length; i++) {
+        cryptosListSymbol.push(cryptoAddedList[i].symbol);
+    }
+    // LOGS
+    console.log('JSON BACK TO OBJECT: ', cryptoAddedList);
+    console.log('LIST OF SYMBOLS: ', cryptosListSymbol);
 
     // CLEANING STRING OF SYMBOLS - take out BTC
+    let position = 0;
     for(let i=0; i<cryptosListSymbol.length; i++){
-        let position = 0;
         if( cryptosListSymbol[i] === 'BTC'){
-            position++;
+            
             cryptosListSymbol.splice(position,1);
+        } else {
+            // code
         }
+        position++;
     }
-    symbolString = cryptosListSymbol.toString();
-    // CREATING TWO LISTS: ONE OF SYMOBLS , ANOTHER FROM HODLS
     
+    symbolString = cryptosListSymbol.toString();
+    console.log('SYMBOLSTRING: ' + symbolString);
+    // CREATING TWO LISTS: ONE OF SYMOBLS , ANOTHER FROM HODLS
     finalCryptoListSymbol =Object.keys(cryptoAddedList).map(i=>cryptoAddedList[i].symbol);
     finalCryptoListHodl = Object.keys(cryptoAddedList).map(i=>cryptoAddedList[i].hodl)
-
 }
 
 
