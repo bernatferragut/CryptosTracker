@@ -79,7 +79,7 @@ function getCryptos2(symbolString) {
     // vars 
     let theResponse;     
     // by default we get the BTC value always + any other crypto
-    let cryptosUrl = `https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,${symbolString}&tsyms=USD`;
+    let cryptosUrl = `https://min-api.cryptocompare.com/data/pricemulti?fsyms=${symbolString}&tsyms=USD`;
     fetch(cryptosUrl)
         .then(blob => blob.json()) 
         .then((res) => {
@@ -90,7 +90,7 @@ function getCryptos2(symbolString) {
             theResponseSymbolList = Object.keys(theResponse); // create a list from it
             theResponseValueList = Object.keys(theResponse).map(i=>theResponse[i].USD); // create a list from it
             // Create DIV
-            createDivCrypto2(finalCryptoListSymbol,finalCryptoListHodl, theResponseValueList, theResponse);  
+            createDivCrypto2(cryptoAddedList, theResponse);  
         }) 
         .catch(err => console.log('There was an error', err)); // In case of Error
 }
@@ -162,7 +162,7 @@ function createDivCrypto(cryptoAdded, theResponse, cryptosListUSD, cryptosListBT
 
 }
 
-function createDivCrypto2(finalCryptoListSymbol,finalCryptoListHodl, theResponseValueList, theResponse) {
+function createDivCrypto2(cryptoAddedList, theResponse) {
     console.log('...COMING SOON...');
 
     // DIV Selection
@@ -183,8 +183,8 @@ function createDivCrypto2(finalCryptoListSymbol,finalCryptoListHodl, theResponse
     // create a loop for each object and create a DIV 
     for (let i=0; i<theResponseSymbolList.length; i++) {
         // VARS
-        let cryptoSymbol = finalCryptoListSymbol[i];
-        let cryptoHodl = finalCryptoListHodl[i];
+        let cryptoSymbol = cryptoAddedList[i].symbol;
+        let cryptoHodl = cryptoAddedList[i].hodl;
         let cryptoHodlValue = theResponseValueList[i];
         let cryptoBTCValue = theResponse.BTC.USD;
         let crytpoGainUSD = (cryptoHodl * cryptoHodlValue).toFixed(1);
@@ -314,24 +314,38 @@ function loadData(localStorage) {
     console.log('LIST OF SYMBOLS: ', cryptosListSymbol);
 
     // CLEANING STRING OF SYMBOLS - take out BTC
-    let position = 0;
-    for(let i=0; i<cryptosListSymbol.length; i++){
-        if( cryptosListSymbol[i] === 'BTC'){
+    // let position = 0;
+    // for(let i=0; i<cryptosListSymbol.length; i++){
+    //     if( cryptosListSymbol[i] === 'BTC'){
             
-            cryptosListSymbol.splice(position,1);
-        } else {
-            // code
-        }
-        position++;
-    }
-    
+    //         cryptosListSymbol.splice(position,1);
+    //     } else {
+    //         // code
+    //     }
+    //     position++;
+    // }
+
     symbolString = cryptosListSymbol.toString();
     console.log('SYMBOLSTRING: ' + symbolString);
     // CREATING TWO LISTS: ONE OF SYMOBLS , ANOTHER FROM HODLS
-    finalCryptoListSymbol =Object.keys(cryptoAddedList).map(i=>cryptoAddedList[i].symbol);
-    finalCryptoListHodl = Object.keys(cryptoAddedList).map(i=>cryptoAddedList[i].hodl)
+    // finalCryptoListSymbol =Object.keys(cryptoAddedList).map(i=>cryptoAddedList[i].symbol);
+    // finalCryptoListHodl = Object.keys(cryptoAddedList).map(i=>cryptoAddedList[i].hodl)
 }
 
 
+
+// HODL\
+let hodl = {
+    BAT : {symbol: "BAT", amount: 6474},
+    BTC : {symbol: "BTC", amount: 4.01},
+    BTG : {symbol: "BTG", amount: 4.01},
+    BTS : {symbol: "BTS", amount: 12500},
+    EOS : {symbol: "EOS", amount: 5860},
+    IOT : {symbol: "IOT", amount: 10200},
+    LTC : {symbol: "LTC", amount: 20.01},
+    TRX : {symbol: "TRX", amount: 6740},
+    XLM : {symbol: "XLM", amount: 1260},
+    XRB : {symbol: "XRB", amount: 100},
+}
 
 
