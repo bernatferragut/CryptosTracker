@@ -341,5 +341,15 @@ function reserTracker() {
     location.reload();
 }
 
+// ====== THE CODE MUST BE REAFCTORED ===== //
+
+// THINGS TO ADD:
+
+// 1. INPUTS CHECK
+
+// 2. ADD BTC EXCEPTION
+
+// 3. ADDING REACT into the PIPELINE
+
 
 
