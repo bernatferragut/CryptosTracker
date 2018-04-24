@@ -225,6 +225,14 @@ function createDivCrypto2(cryptoAddedList, theResponse, theResponseValueList) {
         gainBTC += parseInt(numbersBTC[i],10);
     }
     document.getElementById('CR0').innerText = 'GAINS: ' + gainUSD.toString() + ' USD' + ' => ' + gainBTC.toString() + ' BTC'
+
+    // showing reload button
+    let reset = document.getElementById('reset');
+    let htmlString2 =
+    `
+    <button class="btn1 fadeIn" onclick="reserTracker()">RESET TRACKER</button>
+    `
+    reset.insertAdjacentHTML('beforeend', htmlString2);
 }
 
 // CREATE TRACKER
@@ -325,6 +333,12 @@ function loadData(localStorage) {
 
     symbolString = cryptosListSymbol.toString();
     console.log('SYMBOLSTRING: ' + symbolString);
+}
+
+// RESET TRACKER
+function reserTracker() {
+    localStorage.clear();
+    location.reload();
 }
 
 
